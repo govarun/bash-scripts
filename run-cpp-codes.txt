@@ -1,0 +1,41 @@
+Taken from - https://stackoverflow.com/questions/15557585/how-i-should-make-a-bash-script-to-run-a-c-program
+
+
+
+This script assumes the first argument is the source file name and that it's a .cpp file. Error handling emitted for brevity.
+
+#!/bin/bash
+#set -x
+CC=g++
+CFLAGS=-O
+input_file=$1
+shift # pull off first arg
+args="$*"
+filename=${input_file%%.cpp}
+
+$CC -o $filename.out $CFLAGS $input_file
+rc=$?
+
+if [[ $rc -eq 0 ]]; then
+   ./$filename.out $args
+   exit $?
+fi
+
+exit $rc
+
+So, for example running the script "doit" with the arguments "myprogram.cpp input.txt parameter output.txt" we see:
+
+% bash -x ./doit myprogram.cpp input.txt parameter output.txt
++ set -x
++ CC=g++
++ CFLAGS=-O
++ input_file=myprogram.cpp
++ shift
++ args='input.txt parameter output.txt'
++ filename=myprogram
++ g++ -o myprogram.out -O myprogram.cpp
++ rc=0
++ [[ 0 -eq 0 ]]
++ ./myprogram.out input.txt parameter output.txt
++ exit 0
+
