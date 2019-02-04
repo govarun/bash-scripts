@@ -1,4 +1,4 @@
-This repo will help you get an introduction to bash scripting
+This repo will help you get an introduction to bash scripting, and also has the scripts that I use quite frequently.
 
 Guide -
 
